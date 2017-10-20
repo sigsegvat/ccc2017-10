@@ -3,8 +3,18 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'groovy'
 apply plugin: 'java'
+apply plugin: 'distribution'
 
 sourceCompatibility = 1.8
+
+distributions {
+    main {
+        baseName = 'someName'
+        contents {
+            from { 'src/' }
+        }
+    }
+}
 
 repositories {
     mavenCentral()
