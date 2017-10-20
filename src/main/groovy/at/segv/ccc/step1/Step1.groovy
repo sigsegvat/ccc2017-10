@@ -39,7 +39,22 @@ class Transaction {
 }
 
 use(Game1) {
-    lines = getClass().getResource('/in/level1/level1-4.txt').readLines()
+
+    // Insert at top!
+    Integer level = 1;
+    String sublevel = "eg";
+//    String sublevel = "1";
+//    String sublevel = "2";
+//    String sublevel = "3";
+//    String sublevel = "4";
+//    String sublevel = "5";
+
+    String name = "level$level-${sublevel}.txt"
+    String fileIn = "/in/level$level/" + name
+    String filePath = "out/level$level/"
+    String fileOut = filePath + name
+
+    lines = getClass().getResource(fileIn).readLines()
 
     Integer noAccounts = Integer.parseInt(lines[0])
     List<Account> accounts = lines[1..noAccounts].collect { it.parseAccount() }
@@ -53,8 +68,14 @@ use(Game1) {
         toA.balance += t.amount
     }
 
-    println accounts.size()
-    accounts.each { println "$it.user $it.balance" }
+//    println accounts.size()
+//    accounts.each { println "$it.user $it.balance" }
 
+    // insert at bottom
+    new File(filePath).mkdirs()
+    def file = new File(fileOut)
+
+    file << accounts.size() << "\n"
+    accounts.each { file << "$it.user $it.balance" << "\n" }
 
 }
